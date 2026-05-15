@@ -777,7 +777,7 @@
         ['📍', 'Complejo Polideportivo La Granadilla de Badajoz'],
         ['🏅', '<strong>27</strong> atletas']
       ],
-      quizEmail: 'cmiguelpinto@gmail.com',
+      quizEndpoint: 'https://formspree.io/f/mykoryep',
       quiz: [
         {
           q: 'Qual é a data do Meeting Internacional Ciudad de Badajoz 26?',
@@ -987,7 +987,10 @@
         <div class="quiz-intro">
           Responde ao quiz e envia as respostas por email. Podes ter até <strong>20 perguntas</strong>; neste momento estão configuradas ${page.quiz.length}.
         </div>
-        <form class="quiz-form" id="quizForm">
+        <form class="quiz-form" id="quizForm" action="https://formspree.io/f/mykoryep" method="POST">
+          <input type="hidden" name="_subject" value="Quiz Badajoz 26 - Sport Lisboa e Benfica">
+          <input type="hidden" name="resumo" id="quizSummary">
+          <input type="hidden" name="pontuacao" id="quizScore">
           <div class="quiz-row">
             <label for="quizName">Nome do atleta</label>
             <input id="quizName" name="nome" type="text" placeholder="Nome completo" required>
@@ -1006,7 +1009,7 @@
             </div>
           `).join('')}
           <button class="quiz-submit" type="submit">Enviar respostas por email</button>
-          <div class="quiz-note">Nota: por ser HTML simples, o envio abre o teu programa de email com as respostas preenchidas. Para envio automático é necessário usar EmailJS, Formspree, Google Forms ou backend.</div>
+          <div class="quiz-note">Nota: ao carregar em enviar, as respostas são enviadas diretamente através do Formspree para o email configurado.</div>
         </form>
       </div></section>`;
     }
@@ -1061,7 +1064,6 @@
 
     document.addEventListener('submit', event => {
       if (event.target.id !== 'quizForm') return;
-      event.preventDefault();
 
       const form = event.target;
       const athleteName = form.querySelector('#quizName').value.trim();
@@ -1082,19 +1084,29 @@
         const answer = selected ? selected.value : 'Sem resposta';
         const correct = answer === item.answer;
         if (correct) score += 1;
+
         lines.push('');
         lines.push(`${index + 1}. ${item.q}`);
         lines.push(`Resposta: ${answer}`);
         lines.push(`Resultado: ${correct ? 'Certo' : 'Errado'}`);
         lines.push(`Resposta correta: ${item.answer}`);
+
+        let hidden = form.querySelector(`input[name="pergunta_${index + 1}"]`);
+        if (!hidden) {
+          hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.name = `pergunta_${index + 1}`;
+          form.appendChild(hidden);
+        }
+        hidden.value = `${item.q} | Resposta: ${answer} | ${correct ? 'Certo' : 'Errado'} | Correta: ${item.answer}`;
       });
 
       lines.push('');
       lines.push(`Pontuação: ${score}/${page.quiz.length}`);
 
-      const subject = encodeURIComponent(`Quiz Badajoz 26 - ${athleteName || 'Atleta'}`);
-      const body = encodeURIComponent(lines.join('\n'));
-      window.location.href = `mailto:${page.quizEmail}?subject=${subject}&body=${body}`;
+      form.querySelector('#quizSummary').value = lines.join('\n');
+      form.querySelector('#quizScore').value = `${score}/${page.quiz.length}`;
+      form.querySelector('input[name="_subject"]').value = `Quiz Badajoz 26 - ${athleteName || 'Atleta'}`;
     });
 
     setupActiveNav();
