@@ -142,6 +142,38 @@
     }
     .hero-chip strong { color: var(--gold); font-weight: 800; }
 
+
+    .official-results-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #E30613;
+      color: #FFFFFF;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 8px 22px rgba(0,0,0,.18);
+      transition: .18s ease;
+      white-space: nowrap;
+    }
+    .official-results-button:hover {
+      transform: translateY(-1px);
+      background: #B5121B;
+      color: #FFFFFF;
+    }
+    .hero-actions {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     .sticky-nav {
       position: sticky;
       top: 0;
@@ -243,7 +275,7 @@
       font-weight: 600;
       color: var(--navy);
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 11px;
       box-shadow: 0 2px 10px rgba(4,44,83,.04);
       transition: .2s ease;
@@ -393,6 +425,8 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 10px;
+      justify-content: center;
+      text-align: center;
       background: var(--navy);
       color: white;
       padding: 15px 20px;
@@ -757,7 +791,7 @@
       .section-header { align-items: flex-start; }
     }</style>
 </head>
-<body><header class="hero"><div class="hero-inner"><div class="hero-motto">// E PLURIBUS UNUM</div><h1 id="heroTitle"><span class="benfica-red">SPORT LISBOA E BENFICA</span><br><span class="meeting-white">MEETING INTERNACIONAL CIUDAD DE BADAJOZ 26</span></h1><p class="hero-sub" id="heroSubtitle">Planeamento técnico, organização diária, sessões de treino e distribuição dos atletas por grupo.</p><div class="hero-meta" id="heroMeta"></div></div></header><nav class="sticky-nav"><div class="sticky-nav-inner" id="navLinks"></div></nav><main class="content" id="app"></main><footer><strong>SPORT LISBOA E BENFICA</strong><br>Meeting Internacional Ciudad de Badajoz 26<br>// E PLURIBUS UNUM</footer><script>const page = {
+<body><header class="hero"><div class="hero-inner"><div class="hero-motto">// E PLURIBUS UNUM</div><h1 id="heroTitle"><span class="benfica-red">SPORT LISBOA E BENFICA</span><br><span class="meeting-white">MEETING INTERNACIONAL CIUDAD DE BADAJOZ 26</span></h1><p class="hero-sub" id="heroSubtitle">Planeamento técnico, organização diária, sessões de treino e distribuição dos atletas por grupo.</p><div class="hero-meta" id="heroMeta"></div><div class="hero-actions"><a href="https://fexnatacion.com/online/online2425/xliiimeetingbadajoz/index.html" target="_blank" rel="noopener" class="official-results-button">Resultados Oficiais</a></div></div></header><nav class="sticky-nav"><div class="sticky-nav-inner" id="navLinks"></div></nav><main class="content" id="app"></main><footer><strong>SPORT LISBOA E BENFICA</strong><br>Meeting Internacional Ciudad de Badajoz 26<br>// E PLURIBUS UNUM</footer><script>const page = {
       title: '<span class="benfica-red">SPORT LISBOA E BENFICA</span><br><span class="meeting-white">MEETING INTERNACIONAL CIUDAD DE BADAJOZ 26</span>',
       subtitle: 'Planeamento técnico, organização diária, sessões de treino e distribuição dos atletas por grupo.',
       meta: [
