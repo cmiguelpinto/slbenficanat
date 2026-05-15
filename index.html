@@ -713,6 +713,27 @@
       transform: translateY(-1px);
       box-shadow: 0 8px 20px rgba(92,14,20,.22);
     }
+
+    .quiz-feedback {
+      display: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+    .quiz-feedback.success {
+      display: block;
+      background: #E8F5EE;
+      border: 1px solid #A8DDBE;
+      color: #1A6B3C;
+    }
+    .quiz-feedback.error {
+      display: block;
+      background: #FFF5F0;
+      border: 1px solid #F0B090;
+      color: #9A3400;
+    }
+
     .quiz-note {
       font-size: 12.5px;
       color: var(--muted);
@@ -1009,6 +1030,7 @@
             </div>
           `).join('')}
           <button class="quiz-submit" type="submit">Enviar respostas por email</button>
+          <div class="quiz-feedback" id="quizFeedback"></div>
           <div class="quiz-note">Nota: ao carregar em enviar, as respostas são enviadas diretamente através do Formspree para o email configurado.</div>
         </form>
       </div></section>`;
@@ -1062,10 +1084,13 @@
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    document.addEventListener('submit', event => {
+    document.addEventListener('submit', async event => {
       if (event.target.id !== 'quizForm') return;
+      event.preventDefault();
 
       const form = event.target;
+      const button = form.querySelector('.quiz-submit');
+      const feedback = form.querySelector('#quizFeedback');
       const athleteName = form.querySelector('#quizName').value.trim();
       let score = 0;
 
@@ -1107,6 +1132,34 @@
       form.querySelector('#quizSummary').value = lines.join('\n');
       form.querySelector('#quizScore').value = `${score}/${page.quiz.length}`;
       form.querySelector('input[name="_subject"]').value = `Quiz Badajoz 26 - ${athleteName || 'Atleta'}`;
+
+      feedback.className = 'quiz-feedback';
+      feedback.textContent = '';
+      button.disabled = true;
+      button.textContent = 'A enviar...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          feedback.className = 'quiz-feedback success';
+          feedback.textContent = 'Respostas enviadas com sucesso.';
+          form.reset();
+        } else {
+          feedback.className = 'quiz-feedback error';
+          feedback.textContent = 'Não foi possível enviar. Confirma se o Formspree está ativo/verificado.';
+        }
+      } catch (error) {
+        feedback.className = 'quiz-feedback error';
+        feedback.textContent = 'Erro de ligação. Tenta novamente.';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Enviar respostas por email';
+      }
     });
 
     setupActiveNav();
