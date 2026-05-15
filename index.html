@@ -124,9 +124,9 @@
     }
     .hero-meta {
       display: grid;
-      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      grid-template-columns: repeat(5, max-content);
       gap: 12px;
-      max-width: 900px;
+      align-items: stretch;
     }
     .hero-chip {
       background: rgba(255,255,255,.08);
@@ -139,19 +139,20 @@
       align-items: center;
       gap: 9px;
       backdrop-filter: blur(10px);
+      min-height: 42px;
     }
     .hero-chip strong { color: var(--gold); font-weight: 800; }
 
 
     .official-results-button {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       background: #E30613;
       color: #FFFFFF;
       border: 1px solid rgba(255,255,255,.22);
-      border-radius: 999px;
-      padding: 10px 18px;
+      border-radius: 10px;
+      padding: 9px 16px;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 14px;
       font-weight: 900;
@@ -161,17 +162,13 @@
       box-shadow: 0 8px 22px rgba(0,0,0,.18);
       transition: .18s ease;
       white-space: nowrap;
+      min-height: 42px;
+      height: 100%;
     }
     .official-results-button:hover {
       transform: translateY(-1px);
       background: #B5121B;
       color: #FFFFFF;
-    }
-    .hero-actions {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
     }
 
     .sticky-nav {
@@ -791,7 +788,7 @@
       .section-header { align-items: flex-start; }
     }</style>
 </head>
-<body><header class="hero"><div class="hero-inner"><div class="hero-motto">// E PLURIBUS UNUM</div><h1 id="heroTitle"><span class="benfica-red">SPORT LISBOA E BENFICA</span><br><span class="meeting-white">MEETING INTERNACIONAL CIUDAD DE BADAJOZ 26</span></h1><p class="hero-sub" id="heroSubtitle">Planeamento técnico, organização diária, sessões de treino e distribuição dos atletas por grupo.</p><div class="hero-meta" id="heroMeta"></div><div class="hero-actions"><a href="https://fexnatacion.com/online/online2425/xliiimeetingbadajoz/index.html" target="_blank" rel="noopener" class="official-results-button">Resultados Oficiais</a></div></div></header><nav class="sticky-nav"><div class="sticky-nav-inner" id="navLinks"></div></nav><main class="content" id="app"></main><footer><strong>SPORT LISBOA E BENFICA</strong><br>Meeting Internacional Ciudad de Badajoz 26<br>// E PLURIBUS UNUM</footer><script>const page = {
+<body><header class="hero"><div class="hero-inner"><div class="hero-motto">// E PLURIBUS UNUM</div><h1 id="heroTitle"><span class="benfica-red">SPORT LISBOA E BENFICA</span><br><span class="meeting-white">MEETING INTERNACIONAL CIUDAD DE BADAJOZ 26</span></h1><p class="hero-sub" id="heroSubtitle">Planeamento técnico, organização diária, sessões de treino e distribuição dos atletas por grupo.</p><div class="hero-meta" id="heroMeta"></div></div></header><nav class="sticky-nav"><div class="sticky-nav-inner" id="navLinks"></div></nav><main class="content" id="app"></main><footer><strong>SPORT LISBOA E BENFICA</strong><br>Meeting Internacional Ciudad de Badajoz 26<br>// E PLURIBUS UNUM</footer><script>const page = {
       title: '<span class="benfica-red">SPORT LISBOA E BENFICA</span><br><span class="meeting-white">MEETING INTERNACIONAL CIUDAD DE BADAJOZ 26</span>',
       subtitle: 'Planeamento técnico, organização diária, sessões de treino e distribuição dos atletas por grupo.',
       meta: [
@@ -948,7 +945,7 @@
     function renderHero() {
       document.getElementById('heroTitle').innerHTML = page.title;
       document.getElementById('heroSubtitle').innerHTML = page.subtitle;
-      document.getElementById('heroMeta').innerHTML = page.meta.map(([icon, text]) => `<div class="hero-chip">${icon} <span>${text}</span></div>`).join('');
+      document.getElementById('heroMeta').innerHTML = page.meta.map(([icon, text]) => `<div class="hero-chip">${icon} <span>${text}</span></div>`).join('') + `<a href="https://fexnatacion.com/online/online2425/xliiimeetingbadajoz/index.html" target="_blank" rel="noopener" class="official-results-button">Resultados Oficiais</a>`;
     }
 
     function renderNav() {
